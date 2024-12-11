@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#081C3A"
+    android:background="@drawable/background"
     tools:context=".SignUp">
 
 
@@ -13,10 +13,11 @@
         android:id="@+id/textView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/sunday"
         android:gravity="center"
         android:text="Sign Up"
-        android:textColor="#EBE2E2"
-        android:textSize="34sp"
+        android:textColor="#E45E57"
+        android:textSize="70sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -28,7 +29,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="100dp"
         android:layout_marginEnd="8dp"
-        android:background="#30ffffff"
+        android:background="#50000000"
         android:drawableLeft="@drawable/baseline_person_outline_24"
         android:drawablePadding="20dp"
         android:hint="Username"
@@ -46,10 +47,8 @@
         android:id="@+id/email"
         android:layout_width="391dp"
         android:layout_height="66dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="8dp"
-        android:background="#30ffffff"
+        android:background="#50000000"
         android:drawableLeft="@drawable/baseline_email_24"
         android:drawablePadding="20dp"
         android:hint="Email"
@@ -68,10 +67,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="8dp"
-        android:background="#30ffffff"
+        android:background="#50000000"
         android:drawableLeft="@drawable/baseline_info_24"
         android:drawablePadding="20dp"
         android:hint="Password"
@@ -81,19 +78,18 @@
         android:textColorHint="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/button_register"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/email"
-        app:layout_constraintVertical_bias="0.05" />
+        app:layout_constraintVertical_bias="0.021" />
 
     <EditText
         android:id="@+id/repassword"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="8dp"
-        android:background="#30ffffff"
+        android:background="#50000000"
         android:drawableLeft="@drawable/baseline_info_24"
         android:drawablePadding="20dp"
         android:hint="Re-password"
@@ -108,7 +104,7 @@
         app:layout_constraintTop_toBottomOf="@+id/email"
         app:layout_constraintVertical_bias="0.363" />
 
-    <com.google.android.material.button.MaterialButton
+    <Button
         android:id="@+id/button_register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -5,6 +5,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        Button button_signup_start = findViewById(R.id.button_signup_start);
+        TextView button_signup_start = (TextView) findViewById(R.id.textView2);
         button_signup_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

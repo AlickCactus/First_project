@@ -13,8 +13,6 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.google.android.material.button.MaterialButton;
-
 public class Login extends AppCompatActivity {
 
     @Override
@@ -31,17 +29,17 @@ public class Login extends AppCompatActivity {
         EditText username=(EditText) findViewById(R.id.username);
         EditText password=(EditText) findViewById(R.id.password);
 
-        MaterialButton button_login=(MaterialButton) findViewById(R.id.button_login);
+        Button button_login=(Button) findViewById(R.id.button_login);
 
         button_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (password.getText().toString().equals("ПАРОЛЬ") && username.getText().toString().equals("капуста")){
+                if (password.getText().toString().equals("Пароль") && username.getText().toString().equals("Капуста")){
                     Button button_login = findViewById(R.id.button_login);
                     button_login.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Intent intent = new Intent(Login.this, Chats.class);
+                            Intent intent = new Intent(Login.this, ChatRoom.class);
                             startActivity(intent);
                         }
                     });
