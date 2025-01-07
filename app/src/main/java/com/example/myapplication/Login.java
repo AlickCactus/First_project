@@ -8,10 +8,18 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
 
 public class Login extends AppCompatActivity {
 
@@ -41,6 +49,7 @@ public class Login extends AppCompatActivity {
                         public void onClick(View view) {
                             Intent intent = new Intent(Login.this, ChatRoom.class);
                             startActivity(intent);
+                            addDataToFirestore();
                         }
                     });
                 }else {
@@ -48,5 +57,27 @@ public class Login extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void addDataToFirestore(){
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("nickname", "Капуста");
+        data.put("password", "Пароль");
+        
+        database.collection("users")
+                .add(data)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Toast.makeText(getApplicationContext(), "Вы зарегестрированы", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getApplicationContext(), "Вы зарегестрированы", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 }
