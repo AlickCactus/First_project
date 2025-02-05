@@ -17,6 +17,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -59,6 +60,10 @@ public class SignUp extends AppCompatActivity {
                         //переход на др страницу
                         Intent intent = new Intent(SignUp.this, ChatRoom.class);
                         startActivity(intent);
+                        String user_name = username.getText().toString();
+                        String user_password = password.getText().toString();
+                        String[] info = new String[] {user_name, user_password};
+                        addDataToFirestore(info);
                     }
                     
                 }else if(username.getText().toString().length() == 0 || repassword.getText().toString().length() == 0 || email.getText().toString().length() == 0){
@@ -67,5 +72,28 @@ public class SignUp extends AppCompatActivity {
             }
         });
     }
+
+    private void addDataToFirestore(String[] args){
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("nickname", args[0]);
+        data.put("password", args[1]);
+
+        database.collection("users")
+                .add(data)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Toast.makeText(getApplicationContext(), "Вы зарегестрированы", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getApplicationContext(), "Вы не зарегестрированы", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+}
 
 }

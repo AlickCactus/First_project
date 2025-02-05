@@ -38,7 +38,6 @@ public class Login extends AppCompatActivity {
         EditText password=(EditText) findViewById(R.id.password);
 
         Button button_login=(Button) findViewById(R.id.button_login);
-
         button_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -49,9 +48,9 @@ public class Login extends AppCompatActivity {
                         public void onClick(View view) {
                             Intent intent = new Intent(Login.this, ChatRoom.class);
                             startActivity(intent);
-                            addDataToFirestore();
                         }
                     });
+                    addDataToFirestore();
                 }else {
                     Toast.makeText(Login.this, "Неверный пароль или логин", Toast.LENGTH_SHORT).show();
                 }
@@ -59,12 +58,14 @@ public class Login extends AppCompatActivity {
         });
     }
 
+     
+
     private void addDataToFirestore(){
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         HashMap<String, Object> data = new HashMap<>();
         data.put("nickname", "Капуста");
         data.put("password", "Пароль");
-        
+
         database.collection("users")
                 .add(data)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -76,7 +77,7 @@ public class Login extends AppCompatActivity {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getApplicationContext(), "Вы зарегестрированы", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Вы не зарегестрированы", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
