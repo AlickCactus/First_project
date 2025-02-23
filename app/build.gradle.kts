@@ -45,6 +45,7 @@ dependencies {
     implementation("com.google.firebase:firebase-messaging")
     implementation("com.google.firebase:firebase-firestore")
     implementation("com.google.firebase:firebase-auth")
+    implementation("com.google.firebase:firebase-database")
     implementation("androidx.multidex:multidex:2.0.1")
 
     implementation(libs.appcompat)

@@ -46,11 +46,14 @@ public class Login extends AppCompatActivity {
                     button_login.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Intent intent = new Intent(Login.this, ChatRoom.class);
+                            Intent intent = new Intent(Login.this, ChatsMenu.class);
                             startActivity(intent);
                         }
                     });
-                    addDataToFirestore();
+                    String user_name = username.getText().toString();
+                    String user_password = password.getText().toString();
+                    String[] info = new String[] {user_name, user_password};
+                    addDataToFirestore(info);
                 }else {
                     Toast.makeText(Login.this, "Неверный пароль или логин", Toast.LENGTH_SHORT).show();
                 }
@@ -60,11 +63,11 @@ public class Login extends AppCompatActivity {
 
      
 
-    private void addDataToFirestore(){
+    private void addDataToFirestore(String args[]){
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         HashMap<String, Object> data = new HashMap<>();
-        data.put("nickname", "Капуста");
-        data.put("password", "Пароль");
+        data.put("nickname", args[0]);
+        data.put("password", args[1]);
 
         database.collection("users")
                 .add(data)

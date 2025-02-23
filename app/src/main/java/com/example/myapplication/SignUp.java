@@ -15,16 +15,11 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-<<<<<<< HEAD
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-=======
-//import com.google.android.gms.tasks.OnFailureListener;
-//import com.google.android.gms.tasks.OnSuccessListener;
-//import com.google.firebase.firestore.FirebaseFirestore;
->>>>>>> a589eb8a7369c4ec75e9fef9acd0a29cd010316b
+
 
 import java.util.HashMap;
 
@@ -68,7 +63,8 @@ public class SignUp extends AppCompatActivity {
                         startActivity(intent);
                         String user_name = username.getText().toString();
                         String user_password = password.getText().toString();
-                        String[] info = new String[] {user_name, user_password};
+                        String user_email = email.getText().toString();
+                        String[] info = new String[] {user_name, user_password, user_email};
                         addDataToFirestore(info);
                     }
                     
@@ -79,11 +75,12 @@ public class SignUp extends AppCompatActivity {
         });
     }
 
-    private void addDataToFirestore(String[] args){
+    private void addDataToFirestore(String args[]){
         FirebaseFirestore database = FirebaseFirestore.getInstance();
         HashMap<String, Object> data = new HashMap<>();
         data.put("nickname", args[0]);
         data.put("password", args[1]);
+        data.put("email", args[2]);
 
         database.collection("users")
                 .add(data)
@@ -100,6 +97,4 @@ public class SignUp extends AppCompatActivity {
                     }
                 });
     }
-}
-
 }

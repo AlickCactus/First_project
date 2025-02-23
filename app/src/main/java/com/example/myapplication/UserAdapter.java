@@ -1,59 +1,58 @@
 package com.example.myapplication;
 
-import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.auth.FirebaseAuth;
+import java.util.ArrayList;
 
-import java.util.List;
+public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyRow> {
+    private View.OnClickListener onClickListener;
 
-public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyHolder> {
-
-    Context context;
-    FirebaseAuth firebaseAuth;
-    String uid;
-
-    public UserAdapter(Context context, List<ModelUsers> list) {
-        this.context = context;
-        this.list = list;
-        firebaseAuth = FirebaseAuth.getInstance();
-        uid = firebaseAuth.getUid();
-    }
-
-    List<ModelUsers> list;
-
+    // надувает разметку для записи в RecyclerView
     @NonNull
     @Override
-    public MyHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_chats_menu, parent, false);
-        return new MyHolder(view);
+    public MyRow onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        // какое количество раз будет вызван этот метод - ?
+        Log.d("RRR","onCreateViewHolder");
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.blank_user, parent,false);
+        return new MyRow(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyHolder holder, final int position) {
-        final String hisuid = list.get(position).getUid();
-        String username = list.get(position).getName();
-        holder.name.setText(username);
+    public void onBindViewHolder(@NonNull MyRow holder, int position) {
+        Log.d("RRR","onBindViewHolder");
+        holder.pn.setText(this.arrayList.get(position).getName());
+        holder.lm.setText(this.arrayList.get(position).getMessage());
+//        holder.itemView.setOnClickListener(view -> {
+//            if (onClickListener != null){
+//                onClickListener.onClick(position, );
+//            }
+//        });
     }
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return this.arrayList.size();
     }
 
-    class MyHolder extends RecyclerView.ViewHolder {
-
-        TextView name;
-
-        public MyHolder(@NonNull View itemView) {
+    class MyRow extends RecyclerView.ViewHolder {
+        TextView pn, lm;
+        public MyRow(@NonNull View itemView) {
             super(itemView);
-            name = itemView.findViewById(R.id.name);
+            this.pn = itemView.findViewById(R.id.person_name);
+            this.lm = itemView.findViewById(R.id.last_message);
         }
+    }
+
+    public ArrayList<ModelUsers> arrayList;
+
+    public UserAdapter(ArrayList<ModelUsers> arrayList) {
+        this.arrayList = arrayList;
     }
 }
