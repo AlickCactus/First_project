@@ -1,0 +1,61 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="@string/messages_header">
+
+        <EditTextPreference
+            app:key="signature"
+            app:title="@string/signature_title"
+            app:useSimpleSummaryProvider="true" />
+
+        <ListPreference
+            app:defaultValue="reply"
+            app:entries="@array/reply_entries"
+            app:entryValues="@array/reply_values"
+            app:key="reply"
+            app:title="@string/reply_title"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="Notification">
+        <SwitchPreference
+            app:key="turn_on"
+            app:title="Turn on notifications"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="Design">
+        <EditTextPreference
+            app:key="font_size"
+            app:title="Font size"
+            app:useSimpleSummaryProvider="true"/>
+
+        <ListPreference
+            app:key="color_font"
+            app:title="Color font"
+            app:entryValues="@array/color_fonts_values"
+            app:useSimpleSummaryProvider="true"/>
+
+        <SwitchPreference
+            app:key="themes"
+            app:title="Theme"
+            app:summaryOff="Light theme"
+            app:summaryOn="Dark theme"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/sync_header">
+
+        <SwitchPreferenceCompat
+            app:key="sync"
+            app:title="@string/sync_title" />
+
+        <SwitchPreferenceCompat
+            app:dependency="sync"
+            app:key="attachment"
+            app:summaryOff="@string/attachment_summary_off"
+            app:summaryOn="@string/attachment_summary_on"
+            app:title="@string/attachment_title" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

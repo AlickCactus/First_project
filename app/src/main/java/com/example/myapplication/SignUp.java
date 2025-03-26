@@ -15,13 +15,12 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.android.gms.tasks.OnCompleteListener;
 
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
-import java.util.HashMap;
 
 public class SignUp extends AppCompatActivity {
 
@@ -36,65 +35,48 @@ public class SignUp extends AppCompatActivity {
             return insets;
         });
 
-        EditText username=(EditText) findViewById(R.id.username);
-        EditText email=(EditText) findViewById(R.id.email);
-        EditText password=(EditText) findViewById(R.id.password);
-        EditText repassword=(EditText) findViewById(R.id.repassword);
+        EditText username = (EditText) findViewById(R.id.username);
+        EditText user_email = (EditText) findViewById(R.id.email);
+        EditText user_password = (EditText) findViewById(R.id.password);
+        EditText user_repassword = (EditText) findViewById(R.id.repassword);
+        Button register = (Button) findViewById(R.id.button_register);
 
-        Button button_register=(Button) findViewById(R.id.button_register);
-
-        button_register.setOnClickListener(new View.OnClickListener() {
+        register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(repassword.getText().toString() == password.getText().toString() && password.getText().toString().length() != 0){
-                    boolean correct_password = true;
+                String email, password, repassword;
+                email = user_email.getText().toString();
+                password = user_password.getText().toString();
+                repassword = user_repassword.getText().toString();
 
-                    for (int i = 0; i < password.getText().toString().length(); i++) {
-                        char s = password.getText().toString().charAt(i);
-                        if (!(Character.isLetter(s) || Character.isDigit(s))) {
-                            correct_password = false;
-                            Toast.makeText(SignUp.this, "В пароле должны быть только цифры и буквы", Toast.LENGTH_SHORT).show();
-                        }
-                    }
+                if (password.isEmpty()){
+                    Toast.makeText(SignUp.this, "Заполните пароль", Toast.LENGTH_SHORT).show();
+                }
 
-                    if (correct_password){
-                        //переход на др страницу
-                        Intent intent = new Intent(SignUp.this, ChatRoom.class);
-                        startActivity(intent);
-                        String user_name = username.getText().toString();
-                        String user_password = password.getText().toString();
-                        String user_email = email.getText().toString();
-                        String[] info = new String[] {user_name, user_password, user_email};
-                        addDataToFirestore(info);
-                    }
-                    
-                }else if(username.getText().toString().length() == 0 || repassword.getText().toString().length() == 0 || email.getText().toString().length() == 0){
-                    Toast.makeText(SignUp.this, "Заполните до конца", Toast.LENGTH_SHORT).show();
+                else if (!password.equals(repassword)){
+                    Toast.makeText(SignUp.this, "Не совпадают пароли", Toast.LENGTH_SHORT).show();
+                }
+
+                else{
+                    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                    mAuth.createUserWithEmailAndPassword(email, password)
+                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (task.isSuccessful()) {
+                                        Toast.makeText(SignUp.this, "Вы зарегестрировалась",
+                                                Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(SignUp.this, ChatRoom.class);
+                                        startActivity(intent);
+                                        finish();
+                                    } else {
+                                        Toast.makeText(SignUp.this, "Вы не зарегестрировались",
+                                                Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
                 }
             }
         });
-    }
-
-    private void addDataToFirestore(String args[]){
-        FirebaseFirestore database = FirebaseFirestore.getInstance();
-        HashMap<String, Object> data = new HashMap<>();
-        data.put("nickname", args[0]);
-        data.put("password", args[1]);
-        data.put("email", args[2]);
-
-        database.collection("users")
-                .add(data)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Toast.makeText(getApplicationContext(), "Вы зарегестрированы", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getApplicationContext(), "Вы не зарегестрированы", Toast.LENGTH_SHORT).show();
-                    }
-                });
     }
 }

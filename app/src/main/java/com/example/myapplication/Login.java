@@ -14,10 +14,15 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
 
@@ -34,54 +39,52 @@ public class Login extends AppCompatActivity {
             return insets;
         });
 
-        EditText username=(EditText) findViewById(R.id.username);
-        EditText password=(EditText) findViewById(R.id.password);
-
+        EditText user_email=(EditText) findViewById(R.id.email);
+        EditText user_password=(EditText) findViewById(R.id.password);
         Button button_login=(Button) findViewById(R.id.button_login);
+
         button_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (password.getText().toString().equals("Пароль") && username.getText().toString().equals("Капуста")){
-                    Button button_login = findViewById(R.id.button_login);
-                    button_login.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Intent intent = new Intent(Login.this, ChatsMenu.class);
-                            startActivity(intent);
-                        }
-                    });
-                    String user_name = username.getText().toString();
-                    String user_password = password.getText().toString();
-                    String[] info = new String[] {user_name, user_password};
-                    addDataToFirestore(info);
-                }else {
-                    Toast.makeText(Login.this, "Неверный пароль или логин", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+        button_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String email, password;
+                email = user_email.getText().toString();
+                password = user_password.getText().toString();
+
+                if (email.isEmpty()){
+                    Toast.makeText(Login.this, "Заполните почту", Toast.LENGTH_SHORT).show();
+                }
+
+                else if (password.isEmpty()){
+                    Toast.makeText(Login.this, "Заполните пароль", Toast.LENGTH_SHORT).show();
+                }
+
+                else{
+                    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                    mAuth.signInWithEmailAndPassword(email, password)
+                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (task.isSuccessful()) {
+                                        Toast.makeText(Login.this, "Вы зашли",
+                                                Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(Login.this, ChatsMenu.class);
+                                        startActivity(intent);
+                                        finish(); 
+                                    } else {
+                                        Toast.makeText(Login.this, "Вы не зашли",
+                                                Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
                 }
             }
         });
-    }
-
-     
-
-    private void addDataToFirestore(String args[]){
-        FirebaseFirestore database = FirebaseFirestore.getInstance();
-        HashMap<String, Object> data = new HashMap<>();
-        data.put("nickname", args[0]);
-        data.put("password", args[1]);
-
-        database.collection("users")
-                .add(data)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Toast.makeText(getApplicationContext(), "Вы зарегестрированы", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getApplicationContext(), "Вы не зарегестрированы", Toast.LENGTH_SHORT).show();
-                    }
-                });
     }
 }

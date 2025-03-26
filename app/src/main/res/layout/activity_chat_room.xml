@@ -34,7 +34,8 @@
             android:inputType="text"
             android:paddingHorizontal="10dp"
             android:text=""
-            android:textColorHint="@color/white"/>
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"/>
 
         <ImageButton
             android:id="@+id/btn_send_message"
