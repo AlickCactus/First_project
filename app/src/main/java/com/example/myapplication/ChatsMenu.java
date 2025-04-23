@@ -3,6 +3,7 @@ package com.example.myapplication;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,13 +13,10 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.auth.FirebaseAuth;
-
 import java.util.ArrayList;
 
 public class ChatsMenu extends AppCompatActivity {
 
-    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,18 +28,38 @@ public class ChatsMenu extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
+        
         RecyclerView recyclerView = findViewById(R.id.scroll);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(new UserAdapter(this, generateList()));
+
+        ImageButton search_button = (ImageButton) findViewById(R.id.search_icon);
+        ImageButton settings_button = (ImageButton) findViewById(R.id.settings_icon);
+
+        search_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ChatsMenu.this, SearchActiviry.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        settings_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ChatsMenu.this, SettingsActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private final String name_list[] = {
             "Arias",
     };
 
-    private final String message_list[] = {
-            "Ты что-то сделала",
+    private final String email_list[] = {
+            "sm@yandex.ru",
     };
 
     private final String uid[] = {
@@ -51,7 +69,7 @@ public class ChatsMenu extends AppCompatActivity {
     public ArrayList<ModelUsers> generateList(){
         ArrayList<ModelUsers> arrayList = new ArrayList<>();
         for(int i=0;i<name_list.length;i++) {
-            arrayList.add(new ModelUsers(name_list[i], message_list[i], uid[i]));
+            arrayList.add(new ModelUsers(name_list[i], email_list[i], uid[i]));
         }
         return arrayList;
     }

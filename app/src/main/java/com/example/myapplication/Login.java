@@ -15,16 +15,10 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.HashMap;
 
 public class Login extends AppCompatActivity {
 
@@ -42,13 +36,6 @@ public class Login extends AppCompatActivity {
         EditText user_email=(EditText) findViewById(R.id.email);
         EditText user_password=(EditText) findViewById(R.id.password);
         Button button_login=(Button) findViewById(R.id.button_login);
-
-        button_login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
 
         button_login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,7 +63,7 @@ public class Login extends AppCompatActivity {
                                                 Toast.LENGTH_SHORT).show();
                                         Intent intent = new Intent(Login.this, ChatsMenu.class);
                                         startActivity(intent);
-                                        finish(); 
+                                        finish();
                                     } else {
                                         Toast.makeText(Login.this, "Вы не зашли",
                                                 Toast.LENGTH_SHORT).show();
@@ -86,5 +73,42 @@ public class Login extends AppCompatActivity {
                 }
             }
         });
+
+//        button_login.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                String email, password;
+//                email = user_email.getText().toString();
+//                password = user_password.getText().toString();
+//
+//                if (email.isEmpty()){
+//                    Toast.makeText(Login.this, "Заполните почту", Toast.LENGTH_SHORT).show();
+//                }
+//
+//                else if (password.isEmpty()){
+//                    Toast.makeText(Login.this, "Заполните пароль", Toast.LENGTH_SHORT).show();
+//                }
+//
+//                else{
+//                    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+//                    mAuth.signInWithEmailAndPassword(email, password)
+//                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+//                                @Override
+//                                public void onComplete(@NonNull Task<AuthResult> task) {
+//                                    if (task.isSuccessful()) {
+//                                        Toast.makeText(Login.this, "Вы зашли",
+//                                                Toast.LENGTH_SHORT).show();
+//                                        Intent intent = new Intent(Login.this, ChatsMenu.class);
+//                                        startActivity(intent);
+//                                        finish();
+//                                    } else {
+//                                        Toast.makeText(Login.this, "Вы не зашли",
+//                                                Toast.LENGTH_SHORT).show();
+//                                    }
+//                                }
+//                            });
+//                }
+//            }
+//        });
     }
 }

@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:id="@+id/msgLayout"
     android:paddingVertical="10dp"
     android:paddingRight="15dp"
     android:paddingLeft="60dp"
@@ -17,7 +18,7 @@
         android:elevation="2dp"
         android:textSize="18dp"
         android:layout_alignParentRight="true"
-        android:text="Я же должна готовиться к сессии"
+        android:text="Примерная длина сообщения для чата"
         />
 
 </RelativeLayout>

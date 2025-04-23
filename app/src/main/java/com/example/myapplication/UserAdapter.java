@@ -9,6 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.ArrayList;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyRow>{
@@ -26,21 +28,21 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyRow>{
     @NonNull
     @Override
     public MyRow onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.blank_user, parent,false);
+        View view = LayoutInflater.from(context).inflate(R.layout.blank_user, parent,false);
         return new UserAdapter.MyRow(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyRow holder, int position) {
-        ModelUsers user = arrayList.get(position);
         holder.pn.setText(this.arrayList.get(position).getName());
-        holder.lm.setText(this.arrayList.get(position).getMessage());
+        holder.lm.setText(this.arrayList.get(position).getEmail());
+        String uid = this.arrayList.get(position).getId();
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, ChatRoom.class);
-                intent.putExtra("userid", user.getUid());
+                intent.putExtra("uid", uid);
                 context.startActivity(intent);
             }
         });
@@ -51,8 +53,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyRow>{
 
         public MyRow(@NonNull View itemView) {
             super(itemView);
-            this.pn = itemView.findViewById(R.id.person_name);
-            this.lm = itemView.findViewById(R.id.last_message);
+            this.pn = itemView.findViewById(R.id.personname);
+            this.lm = itemView.findViewById(R.id.user_email);
         }
 
     }

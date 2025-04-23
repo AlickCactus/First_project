@@ -13,7 +13,11 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class MainActivity extends AppCompatActivity {
+
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +33,12 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+//        mAuth = FirebaseAuth.getInstance();
+//        if (mAuth.getCurrentUser() != null){
+//            finish();
+//            startActivity(new Intent(getApplicationContext(), ChatsMenu.class));
+//        }
 
         Button button_login_start = findViewById(R.id.button_login_start);
         button_login_start.setOnClickListener(new View.OnClickListener() {
