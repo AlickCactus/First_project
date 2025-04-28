@@ -34,7 +34,7 @@ public class ChatsMenu extends AppCompatActivity {
         recyclerView.setAdapter(new UserAdapter(this, generateList()));
 
         ImageButton search_button = (ImageButton) findViewById(R.id.search_icon);
-        ImageButton settings_button = (ImageButton) findViewById(R.id.settings_icon);
+        ImageButton menu_button = (ImageButton) findViewById(R.id.menu_icon);
 
         search_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,7 +45,7 @@ public class ChatsMenu extends AppCompatActivity {
             }
         });
 
-        settings_button.setOnClickListener(new View.OnClickListener() {
+        menu_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ChatsMenu.this, SettingsActivity.class);

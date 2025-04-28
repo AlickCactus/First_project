@@ -34,8 +34,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyRow> {
         if (viewType == MSG_TYPE_LEFT){
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.their_message, parent,false);
             return new ChatAdapter.MyRow(view);
-        }
-        else{
+        }else{
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.my_message, parent,false);
             return new ChatAdapter.MyRow(view);
         }
@@ -49,7 +48,6 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyRow> {
 
     class MyRow extends RecyclerView.ViewHolder{
         TextView message;
-
 
         public MyRow(@NonNull View itemView) {
             super(itemView);
@@ -65,7 +63,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.MyRow> {
     @Override
     public int getItemViewType(int position) {
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (arrayList.get(position).getUsername().equals(firebaseUser.getUid())){
+        if (arrayList.get(position).getSender().equals(firebaseUser.getUid())){
             return MSG_TYPE_RIGHT;
         }else{
             return MSG_TYPE_LEFT;

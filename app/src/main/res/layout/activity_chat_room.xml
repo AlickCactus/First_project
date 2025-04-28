@@ -10,24 +10,24 @@
     android:background="@drawable/background_chat"
     tools:context=".ChatRoom">
 
-<!--    <androidx.appcompat.widget.Toolbar-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:background="#414247">-->
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#414247">
 
-<!--        <TextView-->
-<!--            android:id="@+id/chat_room_name"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:textSize="30dp"-->
-<!--            android:textColor="@color/white"-->
-<!--            android:fontFamily="@font/mollenregularpersonaluse"-->
-<!--            android:paddingStart="10dp"-->
-<!--            android:paddingTop="10dp"-->
-<!--            android:paddingBottom="10dp"-->
-<!--            android:text="Bot user"/>-->
+        <TextView
+            android:id="@+id/chat_room_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30dp"
+            android:textColor="@color/white"
+            android:fontFamily="@font/mollenregularpersonaluse"
+            android:paddingStart="10dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="Bot user"/>
 
-<!--    </androidx.appcompat.widget.Toolbar>-->
+    </androidx.appcompat.widget.Toolbar>
 
 
     <androidx.recyclerview.widget.RecyclerView

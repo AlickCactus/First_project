@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -29,7 +30,8 @@ import java.util.HashMap;
 
 public class ChatRoom extends AppCompatActivity {
 
-    private ArrayList message_list;
+    private ChatAdapter chatAdapter;
+    private ArrayList<MessageModel> messageList;
     private RecyclerView recyclerView;
     private FirebaseUser firebaseUser;
 
@@ -47,14 +49,17 @@ public class ChatRoom extends AppCompatActivity {
 
         EditText message_text = findViewById(R.id.msgText);
         ImageButton btn_send = findViewById(R.id.btn_send_message);
-
-        recyclerView = findViewById(R.id.messages_recyclerview);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        TextView chat_room_name = findViewById(R.id.chat_room_name);
 
         Intent intent = getIntent();
         String receiverid = intent.getStringExtra("uid");
+        String username = intent.getStringExtra("name");
+        chat_room_name.setText(username);
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        recyclerView = findViewById(R.id.messages_recyclerview);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         btn_send.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,6 +71,9 @@ public class ChatRoom extends AppCompatActivity {
                 message_text.setText("");
             }
         });
+
+        readMessage(receiverid, firebaseUser.getUid());
+        
     }
 
     private void sendMessage(String message, String receiver, String sender){
@@ -77,5 +85,34 @@ public class ChatRoom extends AppCompatActivity {
         hashMap.put("message", message);
 
         reference.child("Chats").push().setValue(hashMap);
+        
+    }
+
+    private void readMessage(String receiver, String sender){
+        messageList = new ArrayList<>();
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Chats");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                messageList.clear();
+                for (DataSnapshot snapshot1 : snapshot.getChildren()){
+                    MessageModel messageModel = snapshot1.getValue(MessageModel.class);
+                    if (messageModel.getSender().equals(sender) && messageModel.getReceiver().equals(receiver) ||
+                            messageModel.getSender().equals(receiver) && messageModel.getReceiver().equals(sender)){
+                        messageList.add(messageModel);
+                    }
+
+                    chatAdapter = new ChatAdapter(ChatRoom.this, messageList);
+                    chatAdapter.notifyDataSetChanged();
+                    recyclerView.setAdapter(chatAdapter);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }

@@ -28,21 +28,23 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyRow>{
     @NonNull
     @Override
     public MyRow onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.blank_user, parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.blank_user, parent,false);
         return new UserAdapter.MyRow(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyRow holder, int position) {
-        holder.pn.setText(this.arrayList.get(position).getName());
+        String name = this.arrayList.get(position).getName();
+        holder.pn.setText(name);
         holder.lm.setText(this.arrayList.get(position).getEmail());
-        String uid = this.arrayList.get(position).getId();
+        String uid = this.arrayList.get(position).getUid();
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, ChatRoom.class);
                 intent.putExtra("uid", uid);
+                intent.putExtra("name", name);
                 context.startActivity(intent);
             }
         });

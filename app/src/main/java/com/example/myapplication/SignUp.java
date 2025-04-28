@@ -92,23 +92,6 @@ public class SignUp extends AppCompatActivity {
                             user.put("uid", uid);
                             ref.add(user);
 
-//                            DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("PersonData");
-//                            ModelUsers modelUsers = new ModelUsers();
-//                            modelUsers.setName(name);
-//                            modelUsers.setEmail(email);
-//                            modelUsers.setId(uid);
-//                            mDatabase.push().setValue(modelUsers).addOnSuccessListener(new OnSuccessListener<Void>() {
-//                                @Override
-//                                public void onSuccess(Void unused) {
-//                                    Toast.makeText(SignUp.this, "Data added successfully!", Toast.LENGTH_SHORT).show();
-//                                }
-//                            }).addOnFailureListener(new OnFailureListener() {
-//                                @Override
-//                                public void onFailure(@NonNull Exception e) {
-//                                    Toast.makeText(SignUp.this, "Failed to add data", Toast.LENGTH_SHORT).show();
-//                                }
-//                            });
-
                             Intent intent = new Intent(SignUp.this, ChatsMenu.class);
                             startActivity(intent);
                             finish();

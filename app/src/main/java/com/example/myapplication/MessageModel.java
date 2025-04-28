@@ -1,25 +1,19 @@
 package com.example.myapplication;
 
-import com.google.firebase.Timestamp;
 
 public class MessageModel {
     private String message;
-    private String username;
-    private String type;
+    private String sender;
     private String receiver;
-//    private Timestamp timestamp;
 
     public MessageModel(){
 
     }
 
-    public MessageModel(String message, String receiver, String username, String type){
+    public MessageModel(String message, String receiver, String sender){
         this.message = message;
-        this.username = username;
+        this.sender = sender;
         this.receiver = receiver;
-        this.type = type;
-
-//        this.timestamp = timestamp;
     }
 
     public String getMessage() {
@@ -38,27 +32,13 @@ public class MessageModel {
         this.receiver = receiver;
     }
 
-    public String getUsername() {
-        return username;
+    public String getSender() {
+        return sender;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setSender(String username) {
+        this.sender = username;
     }
 
-    public String getType() {
-        return type;
-    }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
-//    public Timestamp getTimestamp() {
-//        return timestamp;
-//    }
-//
-//    public void setTimestamp(Timestamp timestamp) {
-//        this.timestamp = timestamp;
-//    }
 }

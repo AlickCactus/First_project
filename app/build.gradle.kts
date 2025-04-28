@@ -49,6 +49,10 @@ dependencies {
     implementation("androidx.multidex:multidex:2.0.1")
     implementation ("androidx.recyclerview:recyclerview:1.3.2")
 
+    implementation("com.robertlevonyan.view:MaterialChipView:2.0.3")
+    implementation("com.google.android.material:material:1.3.0")
+    implementation("com.android.support:appcompat-v7:23.4.0")
+
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
